@@ -1,9 +1,18 @@
 package com.example.tts;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class TtsRequest {
 
+    @NotBlank(message = "Text is required.")
+    @Size(max = 5000, message = "Text cannot exceed 5000 characters.")
     private String text;
+
+    @NotBlank(message = "Language is required.")
     private String language;
+
+    @NotBlank(message = "Voice is required.")
     private String voice;
 
     public String getText() {

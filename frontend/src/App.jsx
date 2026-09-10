@@ -73,22 +73,20 @@ function App() {
         }
       );
 
-      const result = await response.text();
+      const result = await response.json();
 
-      if (!response.ok) {
-        throw new Error(result);
-      }
+if (!response.ok) {
+  throw new Error(result.error || "Something went wrong.");
+}
 
-      if (result.startsWith("Error")) {
-        throw new Error(result);
-      }
+if (result.error) {
+  throw new Error(result.error);
+}
 
-      const fileName = result.split("\\").pop();
+const audioFileUrl =
+  `http://localhost:8080${result.audioUrl}`;
 
-      const audioFileUrl =
-        `http://localhost:8080/api/audio/${fileName}`;
-
-      setAudioUrl(audioFileUrl);
+setAudioUrl(audioFileUrl);
 
     } catch (error) {
       console.error(error);

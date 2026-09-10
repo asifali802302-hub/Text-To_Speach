@@ -74,10 +74,53 @@ public String getVoices() {
             """;
 }
 
-    @PostMapping("/api/tts")
-    public String generateSpeech(@RequestBody TtsRequest request) {
-        return ttsService.generateSpeech(request);
-    }
+  @PostMapping("/api/tts")
+public String generateSpeech(@jakarta.validation.Valid @RequestBody TtsRequest request) {
+
+    String language = request.getLanguage();
+    String voice = request.getVoice();
+
+    String[] allowedLanguages = {
+            "en-US",
+            "hi-IN",
+            "gu-IN",
+            "mr-IN",
+            "es-ES",
+            "fr-FR",
+            "de-DE"
+    };
+
+   if (!java.util.Arrays.asList(allowedLanguages).contains(language)) {
+    return new com.fasterxml.jackson.databind.ObjectMapper()
+            .createObjectNode()
+            .put("error", "Invalid language.")
+            .toString();
+}
+
+if (!voice.equalsIgnoreCase("female") &&
+    !voice.equalsIgnoreCase("male")) {
+    return new com.fasterxml.jackson.databind.ObjectMapper()
+            .createObjectNode()
+            .put("error", "Invalid voice.")
+            .toString();
+}
+
+    String filePath = ttsService.generateSpeech(request);
+
+if (filePath.startsWith("Error")) {
+    return filePath;
+}
+
+String fileName = java.nio.file.Paths
+        .get(filePath)
+        .getFileName()
+        .toString();
+
+return """
+        {
+          "audioUrl": "/api/audio/%s"
+        }
+        """.formatted(fileName);}
 
     @GetMapping("/api/audio/{fileName}")
     public ResponseEntity<Resource> getAudio(@PathVariable String fileName) {
