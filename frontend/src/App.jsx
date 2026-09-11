@@ -153,24 +153,23 @@ setAudioUrl(audioFileUrl);
               Language
             </label>
 
-            <select
-              value={language}
-              onChange={(e) => {
-                setLanguage(e.target.value);
-                setVoice("female");
-              }}
-            >
-
-              {languages.map((item) => (
-                <option
-                  key={item.language}
-                  value={item.language}
-                >
-                  {item.name}
-                </option>
-              ))}
-
-            </select>
+            <div className="language-cards">
+  {languages.map((item) => (
+    <button
+      type="button"
+      key={item.language}
+      className={`language-card ${
+        language === item.language ? "selected" : ""
+      }`}
+      onClick={() => {
+        setLanguage(item.language);
+        setVoice("female");
+      }}
+    >
+      {item.name}
+    </button>
+  ))}
+</div>
 
           </div>
 
@@ -183,34 +182,27 @@ setAudioUrl(audioFileUrl);
               Voice
             </label>
 
-            <select
-              value={voice}
-              onChange={(e) =>
-                setVoice(e.target.value)
-              }
-            >
-
-              {languages
-                .find(
-                  (item) =>
-                    item.language === language
-                )
-                ?.voices.map((voiceOption) => (
-
-                  <option
-                    key={voiceOption}
-                    value={voiceOption}
-                  >
-
-                    {voiceOption === "female"
-                      ? "Female Voice"
-                      : "Male Voice"}
-
-                  </option>
-
-                ))}
-
-            </select>
+           <div className="voice-cards">
+  {languages
+    .find(
+      (item) =>
+        item.language === language
+    )
+    ?.voices.map((voiceOption) => (
+      <button
+        type="button"
+        key={voiceOption}
+        className={`voice-card ${
+          voice === voiceOption ? "selected" : ""
+        }`}
+        onClick={() => setVoice(voiceOption)}
+      >
+        {voiceOption === "female"
+          ? "Female Voice"
+          : "Male Voice"}
+      </button>
+    ))}
+</div>
 
           </div>
 
