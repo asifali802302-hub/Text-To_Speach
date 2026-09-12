@@ -135,7 +135,7 @@ select:focus {
   border-color: #6366f1;
 }
 
-..buttons {
+.buttons {
   display: grid;
   grid-template-columns: 1fr auto auto;
   gap: 12px;
