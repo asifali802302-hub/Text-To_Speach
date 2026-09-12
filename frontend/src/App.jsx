@@ -14,7 +14,7 @@ function App() {
     const fetchVoices = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/voices"
+          "https://text-to-speach-y6om.onrender.com/api/voices"
         );
 
         const data = await response.json();
@@ -31,7 +31,7 @@ function App() {
   const checkBackend = async () => {
     try {
       const response = await fetch(
-        "http://localhost:8080/api/health"
+        "https://text-to-speach-y6om.onrender.com/api/health"
       );
 
       const result = await response.text();
@@ -59,7 +59,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/tts",
+        "https://text-to-speach-y6om.onrender.com/api/tts",
         {
           method: "POST",
           headers: {
@@ -84,7 +84,7 @@ if (result.error) {
 }
 
 const audioFileUrl =
-  `http://localhost:8080${result.audioUrl}`;
+  `https://text-to-speach-y6om.onrender.com${result.audioUrl}`;
 
 setAudioUrl(audioFileUrl);
 
