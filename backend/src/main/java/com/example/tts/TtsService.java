@@ -35,7 +35,7 @@ public class TtsService {
 
             // Run Python script
             ProcessBuilder processBuilder = new ProcessBuilder(
-                    "python",
+                    "python3",
                     pythonScript.toString(),
                     request.getText(),
                     voice,
